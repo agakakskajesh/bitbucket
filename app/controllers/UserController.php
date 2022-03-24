@@ -123,6 +123,8 @@ class UserController
         $name = htmlspecialchars($data['name']);
         $password = htmlspecialchars($data['password']);  
 
+        $errors = [];
+
         if (!preg_match('/^[A-Za-z]{2,}$/', $name) || empty($name)) {
             $errors[] = ['register_name_message' => 'Имя должно состоять более чем из 2 символов'];
         }
@@ -168,7 +170,7 @@ class UserController
         $login = htmlspecialchars(trim($data['login']));
 
         if ($this->findByLogin($data) == null) {
-            echo "user doesnt exist";
+            json_encode(['register_exists_message' => 'Пользователь с таким логином уже существует']);
             die();
         }
 
@@ -185,7 +187,7 @@ class UserController
     {
         $this->validateRequestFromAjax();
 
-        $login = htmlspecialchars(trim($data['login']));
+        $login = htmlspecialchars($data['login']);
         if (count($this->jsonArray) > 0) {
             foreach ($this->jsonArray as $item) {
                 if (strtolower($item['login']) === strtolower($login)) {
@@ -200,7 +202,7 @@ class UserController
     {
         $this->validateRequestFromAjax();
 
-        $email = htmlspecialchars(trim($data['email']));
+        $email = htmlspecialchars($data['email']);
         if (count($this->jsonArray) > 0) {
             foreach ($this->jsonArray as $item) {
                 if ($item['email'] === $email) {
