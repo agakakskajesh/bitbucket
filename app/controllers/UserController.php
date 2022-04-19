@@ -5,7 +5,8 @@ require_once('app/models/User.php');
 class UserController
 {
     private $jsonArray;
-
+//good job
+   
     public function __construct()
     {
         $json = file_get_contents('resources/db.json');
